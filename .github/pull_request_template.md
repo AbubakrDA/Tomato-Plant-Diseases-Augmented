@@ -20,3 +20,4 @@ Fixes #(issue)
 - [ ] I have updated the documentation accordingly
 - [ ] Automated tests pass locally with my changes (`pytest tests/ -v`)
 - [ ] Docker builds pass without error
+
