@@ -18,12 +18,17 @@ This project unites **applied computer vision theory**, an **optimized custom Co
 ## 📌 Table of Contents
 
 1. [Key Highlights](#-key-highlights)
-2. [Understanding Convolutional Neural Networks (CNNs)](#-understanding-convolutional-neural-networks-cnns)
+2. [Project Context & Precision Agriculture Motivation](#-project-context--precision-agriculture-motivation)
+   - [Global Food Security & Economic Importance of Tomatoes](#global-food-security--economic-importance-of-tomatoes)
+   - [The Phytosanitary Burden in Solanaceous Crops](#the-phytosanitary-burden-in-solanaceous-crops)
+   - [The Scouting Bottleneck & Diagnostic Ambiguity](#the-scouting-bottleneck--diagnostic-ambiguity)
+   - [Project Vision & Core Engineering Principles](#project-vision--core-engineering-principles)
+3. [Understanding Convolutional Neural Networks (CNNs)](#-understanding-convolutional-neural-networks-cnns)
    - [Deep Learning & Computer Vision Foundations](#deep-learning--computer-vision-foundations)
    - [Why CNNs Excel Over Traditional Machine Learning](#why-cnns-excel-over-traditional-machine-learning)
    - [Visual Hierarchy of Learned Representations](#visual-hierarchy-of-learned-representations)
    - [General CNN Architecture Visual Overview](#general-cnn-architecture-visual-overview)
-3. [CNN Architecture: From Input Image to Prediction](#-cnn-architecture-from-input-image-to-prediction)
+4. [CNN Architecture: From Input Image to Prediction](#-cnn-architecture-from-input-image-to-prediction)
    - [Step 1 — Image Input Tensor](#step-1--image-input-tensor)
    - [Step 2 — Image Preprocessing & Normalization](#step-2--image-preprocessing--normalization)
    - [Step 3 — Data Augmentation Strategy](#step-3--data-augmentation-strategy)
@@ -36,45 +41,48 @@ This project unites **applied computer vision theory**, an **optimized custom Co
    - [Step 10 — Regularization via Dropout](#step-10--regularization-via-dropout)
    - [Step 11 — Softmax Probability Distribution](#step-11--softmax-probability-distribution)
    - [Step 12 — Final Prediction & Agronomic Mapping](#step-12--final-prediction--agronomic-mapping)
-4. [Project-Specific CNN Architecture & Tensor Progression](#-project-specific-cnn-architecture--tensor-progression)
+5. [Project-Specific CNN Architecture & Tensor Progression](#-project-specific-cnn-architecture--tensor-progression)
    - [Exact Layer Specification Table](#exact-layer-specification-table)
    - [Tensor Shape Progression & Mathematical Verification](#tensor-shape-progression--mathematical-verification)
    - [Project Pipeline Flowchart](#project-pipeline-flowchart)
-5. [How CNN Training Works](#-how-cnn-training-works)
+6. [How CNN Training Works](#-how-cnn-training-works)
    - [End-to-End Training Lifecycle](#end-to-end-training-lifecycle)
    - [Loss Formulation: Sparse Categorical Cross-Entropy](#loss-formulation-sparse-categorical-cross-entropy)
    - [Optimization with Adam & Learning Rate Scheduling](#optimization-with-adam--learning-rate-scheduling)
    - [Training Loop Execution Flowchart](#training-loop-execution-flowchart)
-6. [Model Evaluation & Research Benchmarks](#-model-evaluation--research-benchmarks)
+7. [Model Evaluation & Research Benchmarks](#-model-evaluation--research-benchmarks)
    - [Dataset Distribution & Splits](#dataset-distribution--splits)
    - [Per-Class Validation Performance (Classification Report)](#per-class-validation-performance-classification-report)
    - [Confusion Matrix & Error Analysis](#confusion-matrix--error-analysis)
    - [Diagnostic Trade-Offs: False Positives vs. False Negatives](#diagnostic-trade-offs-false-positives-vs-false-negatives)
    - [Evaluation Pipeline Flowchart](#evaluation-pipeline-flowchart)
-7. [Understanding CNN Predictions with Grad-CAM](#-understanding-cnn-predictions-with-grad-cam)
+8. [Understanding CNN Predictions with Grad-CAM](#-understanding-cnn-predictions-with-grad-cam)
    - [The Black-Box Challenge in Plant Pathology](#the-black-box-challenge-in-plant-pathology)
    - [Mathematical Formulation of Grad-CAM](#mathematical-formulation-of-grad-cam)
    - [Visualizing Model Attention on Tomato Leaves](#visualizing-model-attention-on-tomato-leaves)
    - [Grad-CAM Computation Flowchart](#grad-cam-computation-flowchart)
-8. [End-to-End System Workflows](#-end-to-end-system-workflows)
+9. [End-to-End System Workflows](#-end-to-end-system-workflows)
    - [Workflow A: Research & Model Development](#workflow-a-research--model-development)
    - [Workflow B: Production Inference & Decision Support](#workflow-b-production-inference--decision-support)
    - [Full System Architecture Diagram](#full-system-architecture-diagram)
-9. [CNN Technical Concepts Reference Guide](#-cnn-technical-concepts-reference-guide)
-10. [Training vs. Inference Comparison](#-training-vs-inference-comparison)
-11. [Supported Tomato Leaf Disease Classes](#-supported-tomato-leaf-disease-classes)
-12. [Quick Start: Docker (Recommended)](#-quick-start-docker-recommended)
-13. [Local Installation & Setup](#-local-installation--setup)
-14. [Running the Services](#-running-the-services)
+10. [CNN Technical Concepts Reference Guide](#-cnn-technical-concepts-reference-guide)
+11. [Training vs. Inference Comparison](#-training-vs-inference-comparison)
+12. [Supported Tomato Leaf Disease Classes & Agronomic Pathology Guide](#-supported-tomato-leaf-disease-classes--agronomic-pathology-guide)
+    - [Summary Overview Table](#summary-overview-table)
+    - [In-Depth Pathological Profiles (Classes 0-9)](#in-depth-pathological-profiles-classes-0-9)
+    - [Comparative Differential Diagnosis Matrix](#comparative-differential-diagnosis-matrix)
+13. [Quick Start: Docker (Recommended)](#-quick-start-docker-recommended)
+14. [Local Installation & Setup](#-local-installation--setup)
+15. [Running the Services](#-running-the-services)
     - [1. FastAPI REST Backend](#1-fastapi-rest-backend)
     - [2. Streamlit Web Dashboard](#2-streamlit-web-dashboard)
     - [3. Jupyter Research Notebooks](#3-jupyter-research-notebooks)
-15. [REST API Documentation & Endpoints](#-rest-api-documentation--endpoints)
-16. [Automated Testing & Quality Assurance](#-automated-testing--quality-assurance)
-17. [Limitations & Research Considerations](#-limitations--research-considerations)
-18. [Future Research Directions](#-future-research-directions)
-19. [Agricultural Disclaimer](#-agricultural-disclaimer)
-20. [License & Attribution](#-license--attribution)
+16. [REST API Documentation & Endpoints](#-rest-api-documentation--endpoints)
+17. [Automated Testing & Quality Assurance](#-automated-testing--quality-assurance)
+18. [Limitations & Research Considerations](#-limitations--research-considerations)
+19. [Future Research Directions](#-future-research-directions)
+20. [Agricultural Disclaimer](#-agricultural-disclaimer)
+21. [License & Attribution](#-license--attribution)
 
 ---
 
@@ -86,6 +94,55 @@ This project unites **applied computer vision theory**, an **optimized custom Co
 - **Enterprise-Grade Microservice**: High-throughput FastAPI REST API with automatic OpenAPI/Swagger documentation, Pydantic v2 data validation, CORS middleware, and container health probes.
 - **Interactive Agronomic UI**: Streamlit web dashboard presenting real-time leaf segmentation previews, confidence probability distributions, symptom profiles, and downloadable diagnostic PDF/CSV reports.
 - **Full Docker Orchestration**: Production-ready multi-container architecture orchestrated via Docker Compose uniting backend and frontend services.
+
+---
+
+## 🌾 Project Context & Precision Agriculture Motivation
+
+### Global Food Security & Economic Importance of Tomatoes
+The cultivated tomato (*Solanum lycopersicum*) is among the most extensively produced and economically vital horticultural crops on Earth. According to the Food and Agriculture Organization (FAO), global tomato production exceeds **180 million metric tonnes annually**, cultivated across more than **5 million hectares** spanning open-field farms and climate-controlled greenhouses.
+
+Beyond its widespread culinary ubiquity, the tomato represents:
+- **A Vital Smallholder Cash Crop**: For millions of smallholder farming families across Asia, Africa, and the Americas, tomato cultivation provides high-return cash flow, seasonal rural employment, and poverty alleviation.
+- **Essential Nutritional Security**: Tomatoes provide a rich dietary source of essential micronutrients, particularly **Vitamin C (ascorbic acid)**, **Vitamin A (beta-carotene)**, **folate**, and **potassium**. Crucially, they are the primary dietary source of **lycopene**—a powerful carotenoid antioxidant linked in biomedical studies to reduced risks of cardiovascular disease and certain cancers.
+
+### The Phytosanitary Burden in Solanaceous Crops
+Despite high agronomic value, the tomato plant possesses delicate vegetative tissue, a dense foliage canopy, and soft fruit, rendering it exceptionally vulnerable to a broad spectrum of phytopathogens. Foliar diseases caused by bacteria, fungi, oomycetes, viruses, and parasitic arthropods frequently result in **yield losses ranging from 20% to complete 100% total crop failure** in untreated or mismanaged fields.
+
+Major factors driving disease virulence include:
+- **Microclimate Vulnerability**: High ambient humidity ($>80\%$), continuous overhead leaf moisture, and warm temperatures ($20^\circ\text{C}-30^\circ\text{C}$) create ideal incubation chambers for rapid spore germination and bacterial proliferation.
+- **Explosive Reproductive Cycles**: Pathogens like *Phytophthora infestans* (Late Blight) and *Tetranychus urticae* (Two-Spotted Spider Mites) reproduce exponentially. A minor localized infection can engulf an entire hectare within 5 to 7 days.
+- **Vector-Borne Epidemics**: Viruses such as *Tomato Yellow Leaf Curl Virus* (TYLCV) are vectored aggressively by Silverleaf Whiteflies, allowing rapid viral dissemination across entire regional agricultural belts.
+
+### The Scouting Bottleneck & Diagnostic Ambiguity
+Traditional disease surveillance relies almost entirely on manual visual scouting by farmers, agricultural extension workers, or certified plant pathologists. However, this conventional approach faces severe operational limitations:
+1. **Critical Extension Agent Scarcity**: In developing and rural farming communities, the ratio of public agricultural extension officers to active farmers frequently exceeds 1:3,000. Agronomists cannot visit every smallholder field during critical early-infection windows.
+2. **Visual Lookalike Ambiguity**: Early-stage foliar infections present nearly indistinguishable symptoms to the naked eye. For instance:
+   - Early lesions of *Bacterial Spot* closely mimic early lesions of *Septoria Leaf Spot*.
+   - Concentric target rings of *Early Blight* overlap visually with *Target Spot*.
+   - Nascent *Two-Spotted Spider Mite* feeding punctures (chlorotic stippling) are easily mistaken for bacterial grease specks or nutrient chlorosis.
+3. **Severe Consequences of Misdiagnosis**:
+   - Applying synthetic fungicides for a bacterial or viral infection wastes capital, leaves the pathogen unchecked, and contaminates local watersheds.
+   - Excessive or misdirected chemical spraying accelerates **chemical resistance** (such as copper-tolerant *Xanthomonas* or strobilurin-resistant *Corynespora* strains).
+   - In late blight outbreaks, delayed diagnosis by even 48 hours eliminates the window for protective intervention, necessitating total crop destruction.
+
+### Project Vision & Core Engineering Principles
+This project was initiated to bridge the gap between advanced deep learning research and practical, frontline agricultural operations. The system was designed around four core engineering requirements:
+
+```mermaid
+flowchart TD
+    V1["Precision Agriculture Diagnostic Need"] --> P1["1. Resource-Constrained Edge Efficiency<br/>(333K Params, Sub-40ms CPU Latency)"]
+    V1 --> P2["2. Dual-Interface Microservice Topology<br/>(Programmatic REST API + Visual UI)"]
+    V1 --> P3["3. Transparent Decision Support (Grad-CAM)<br/>(Verifiable Visual Attention Heatmaps)"]
+    V1 --> P4["4. Agronomic Actionability<br/>(Cultural, Biological & Chemical Guidance)"]
+```
+
+1. **Resource-Constrained Efficiency**: Unlike massive multi-gigabyte foundation models requiring expensive cloud GPU infrastructure ($15,000+ accelerators), this system employs an optimized custom architecture requiring just **333,152 parameters** (434 KB memory footprint) operating at $160 \times 160$ resolution. It delivers sub-40 ms inference on commodity x86 and ARM processors, opening doors for low-cost edge deployments (Raspberry Pi, low-spec cloud VMs, field tablets).
+2. **Dual-Interface Microservice Ecosystem**:
+   - A high-concurrency **FastAPI REST API** with standard OpenAPI schemas, enabling seamless integration into automated agricultural drones, smart greenhouse IoT controllers, and mobile apps.
+   - An intuitive **Streamlit Web Dashboard** enabling agronomists, extension officers, and farmers to drag-and-drop photos, inspect class probabilities, and download PDF/CSV management plans without writing a single line of code.
+3. **Transparent Decision Support (Grad-CAM)**: Agricultural AI must be trusted by domain specialists. By integrating Gradient-weighted Class Activation Mapping directly into the diagnostic pipeline, users can visually verify whether the model is focusing on the actual necrotic lesion or being misled by background soil or camera artifacts.
+4. **Actionable Integrated Pest Management (IPM)**: Predicting a class label (e.g., `Tomato___Early_blight`) is only half the battle. This system enriches every inference response with verified pathogen biology, incubation conditions, cultural sanitation practices, biological alternatives, and targeted chemical active ingredients.
 
 ---
 
@@ -836,22 +893,209 @@ The model functions under two distinct modes depending on whether it is optimizi
 
 ---
 
-## 🌿 Supported Tomato Leaf Disease Classes
+## 🌿 Supported Tomato Leaf Disease Classes & Agronomic Pathology Guide
 
-The model classifies leaf images into 10 distinct categories:
+The deep learning model discriminates among **10 distinct physiological and pathological leaf categories** (9 biotic stress conditions and 1 healthy control). Below is an exhaustive agronomic reference detailing pathogen biology, epidemiology, visual diagnostics, lookalike differentiation, and Integrated Pest Management (IPM) guidelines.
 
-| ID | Class Name | Common Name | Pathogen / Type | Symptoms Overview |
-|:--:|:-----------|:------------|:----------------|:------------------|
-| `0` | `Tomato___Bacterial_spot` | Bacterial Spot | *Xanthomonas spp.* (Bacterium) | Small, water-soaked, circular to irregular dark brown spots with a greasy appearance on leaves. |
-| `1` | `Tomato___Early_blight` | Early Blight | *Alternaria solani* (Fungus) | Concentric rings ('target-like' bullseye pattern) on older lower leaves, often surrounded by a yellow halo. |
-| `2` | `Tomato___Late_blight` | Late Blight | *Phytophthora infestans* (Oomycete) | Large, irregular water-soaked lesions that turn dark brown/purplish, with white fungal mold in humid conditions. |
-| `3` | `Tomato___Leaf_Mold` | Leaf Mold | *Passalora fulva* (Fungus) | Pale yellow/light green spots on upper leaf surfaces; olive-green velvety mold underneath. |
-| `4` | `Tomato___Septoria_leaf_spot` | Septoria Leaf Spot | *Septoria lycopersici* (Fungus) | Numerous small circular lesions with dark brown margins and sunken grayish-white centers. |
-| `5` | `Tomato___Spider_mites...` | Two-Spotted Spider Mites | *Tetranychus urticae* (Acarid pest) | Fine yellow stippling and speckled chlorotic feeding punctures; delicate silk webbing on leaf undersides. |
-| `6` | `Tomato___Target_Spot` | Target Spot | *Corynespora cassiicola* (Fungus) | Small brown lesions with pale brown centers that expand into dark concentric target rings, causing defoliation. |
-| `7` | `Tomato___Tomato_Yellow_Leaf_Curl_Virus` | Yellow Leaf Curl (TYLCV) | *Begomovirus* (Whitefly vector) | Severe upward and inward leaf curling, mottled chlorotic margins, stunted growth, and flower drop. |
-| `8` | `Tomato___Tomato_mosaic_virus` | Mosaic Virus (ToMV) | *Tobamovirus* (Contact vector) | Mottled light and dark green mosaic patterns, blistering, fern-leaf distortion, and plant stunting. |
-| `9` | `Tomato___healthy` | Healthy Leaf | Healthy control (No pathogen) | Uniform vibrant green foliage, healthy vascular veins, and complete absence of necrotic spots or chlorosis. |
+### Summary Overview Table
+
+| ID | Class Label (Machine Key) | Common Name | Biological Agent & Taxon | Primary Foliar Symptoms |
+|:--:|:--------------------------|:------------|:-------------------------|:------------------------|
+| `0` | `Tomato___Bacterial_spot` | **Bacterial Spot** | *Xanthomonas spp.* (Bacterium) | Small (1–3 mm), dark, greasy, water-soaked lesions with chlorotic halos; blossom drop. |
+| `1` | `Tomato___Early_blight` | **Early Blight** | *Alternaria solani* (Ascomycete fungus) | Concentric bullseye target rings on lower foliage surrounded by prominent yellow halos. |
+| `2` | `Tomato___Late_blight` | **Late Blight** | *Phytophthora infestans* (Oomycete water mold) | Rapid, large, purplish-brown water-soaked collapse; white downy sporulation underneath. |
+| `3` | `Tomato___Leaf_Mold` | **Leaf Mold** | *Passalora fulva* (Fungus) | Diffuse pale-yellow upper leaf spots paired with dense olive-green velvety mold below. |
+| `4` | `Tomato___Septoria_leaf_spot` | **Septoria Leaf Spot** | *Septoria lycopersici* (Fungus) | Small circular spots with dark brown margins, sunken grayish-white centers, and black pycnidia specks. |
+| `5` | `Tomato___Spider_mites...` | **Two-Spotted Spider Mites** | *Tetranychus urticae* (Acarid arachnid) | Chlorotic stippling and yellow speckling; delicate silk webbing; bronzed brittle foliage. |
+| `6` | `Tomato___Target_Spot` | **Target Spot** | *Corynespora cassiicola* (Fungus) | Circular brown lesions with pale centers and concentric rings across the entire canopy. |
+| `7` | `Tomato___Tomato_Yellow_Leaf_Curl_Virus` | **Yellow Leaf Curl (TYLCV)** | *Begomovirus* (Whitefly-transmitted) | Severe upward and inward leaf curling, bright yellow chlorotic margins, and severe stunting. |
+| `8` | `Tomato___Tomato_mosaic_virus` | **Mosaic Virus (ToMV)** | *Tobamovirus* (Mechanically transmitted) | Mottled light/dark green mosaic patches, blistering, fern-leaf narrowing, and plant dwarfing. |
+| `9` | `Tomato___healthy` | **Healthy Leaf** | Negative Control Baseline | Vibrant, uniform green lamina, intact vascular venation, and zero necrotic or chlorotic lesions. |
+
+---
+
+### In-Depth Pathological Profiles (Classes 0–9)
+
+#### Class 0: Bacterial Spot
+- **Causal Pathogens**: *Xanthomonas perforans*, *Xanthomonas euvesicatoria*, *Xanthomonas gardneri*, and *Xanthomonas vesicatoria* (Gram-negative rod-shaped aerobic bacteria).
+- **Disease Cycle & Transmission**: Overwinters on contaminated seed coats, volunteer tomato plants, and solanaceous crop debris. Transmitted rapidly across canopies via rain splash, overhead sprinkler irrigation, aerosolized wind-driven rain, and field workers handling wet foliage. Bacteria penetrate through natural foliar openings (stomata and hydathodes) or physical micro-wounds created by blowing sand, insect feeding, or pruning shears.
+- **Favorable Weather Conditions**: High ambient temperatures ($24^\circ\text{C} - 30^\circ\text{C}$ / $75^\circ\text{F} - 86^\circ\text{F}$) accompanied by high relative humidity ($>80\%$) and continuous leaf wetness exceeding 3 to 4 hours.
+- **Symptom Progression**:
+  - *Foliar*: Begins as tiny ($<2\text{ mm}$), circular to irregular water-soaked spots on leaflets. Lesions rapidly darken into brownish-black, greasy-textured necrotic specks often outlined by an irregular yellow halo. Under severe pressure, lesions coalesce, leading to general foliar blighting, scorch-like collapse, and extensive defoliation.
+  - *Stems & Flowers*: Dark, elongated lesions appear on green stems. Blossom drop occurs when pedicels become infected, drastically reducing fruit set.
+  - *Fruit*: Small, black, raised scabs develop on green fruits, eventually becoming sunken with roughened brown margins, ruining commercial marketability.
+- **Diagnostic Lookalikes & Differential Clues**: Frequently confused with *Septoria Leaf Spot*. Bacterial spot lesions maintain an irregular, water-soaked greasy boundary and completely lack fungal fruiting bodies. Septoria spots are more uniformly circular with sunken tan centers containing visible black pinpoint dots (pycnidia).
+- **Integrated Pest Management (IPM)**:
+  - *Cultural Controls*: Strict 2- to 3-year crop rotation avoiding peppers and eggplants; plant certified hot-water-treated or bleach-sanitized seed; convert from overhead to root-zone drip irrigation; never cultivate or harvest fields when leaves are wet.
+  - *Biological Controls*: Foliar bio-bactericides containing *Bacillus subtilis* or target-specific bacteriophages applied in late afternoon to avoid UV degradation.
+  - *Chemical Intervention*: Preventative copper-based bactericides (copper hydroxide or copper octanoate) tank-mixed with an ethylene bisdithiocarbamate (EBDC) fungicide like mancozeb, which breaks down copper-tolerant bacterial cell walls.
+
+---
+
+#### Class 1: Early Blight
+- **Causal Pathogen**: *Alternaria solani* (Dematiaceous hyphomycete fungus).
+- **Disease Cycle & Transmission**: A ubiquitous soil-borne and seed-borne necrotrophic fungus that overwinters as mycelium or chlamydospores in solanaceous crop residues. Large multicellular conidia are released into air currents as relative humidity drops in mid-morning and are dispersed by wind, splashing water, insects, and contaminated farm machinery.
+- **Favorable Weather Conditions**: Warm, humid weather with temperatures between $24^\circ\text{C} - 29^\circ\text{C}$ ($75^\circ\text{F} - 84^\circ\text{F}$) and alternating cycles of heavy dew or rainfall followed by warm dry spells.
+- **Symptom Progression**:
+  - *Foliar*: Symptoms typically initiate on the oldest, shaded, senescing leaves near the base of the plant. Small brown to black spots enlarge into circular lesions up to $10 - 15\text{ mm}$ in diameter. As the fungus advances through leaf tissue, it produces dark, elevated, concentric ridges forming a prominent **target-board (bullseye)** morphology. A pronounced chlorotic yellow halo surrounds each mature lesion due to the diffusion of alternaric acid and solanapyrone phytotoxins.
+  - *Defoliation*: Heavily infected lower leaves turn completely yellow, wither, and drop, exposing green tomato fruits to direct sunlight and catastrophic **sunscald**.
+  - *Stems & Fruit*: Causes "collar rot" girdling on young seedlings; produces sunken, leathery, black lesions with concentric rings at the stem end of mature tomato fruit.
+- **Diagnostic Lookalikes & Differential Clues**: Readily confused with *Target Spot* (*Corynespora cassiicola*). Early blight lesions generally display more pronounced, wider concentric ridges and wider chlorotic halos, and are strictly concentrated on the lower canopy during early disease onset.
+- **Integrated Pest Management (IPM)**:
+  - *Cultural Controls*: Bottom-prune lower foliage (strip lower 30–45 cm of leaves after first fruit cluster develops) to interrupt soil spore splashing; install plastic or straw mulch over bare soil; practice 3-year non-solanaceous rotations.
+  - *Biological Controls*: Preventative foliar inoculations with *Trichoderma harzianum* or *Bacillus amyloliquefaciens*.
+  - *Chemical Intervention*: Protectant sprays with chlorothalonil or mancozeb at first blossom; alternate with systemic site-specific chemistries (e.g., azoxystrobin [FRAC 11], difenoconazole [FRAC 3], or boscalid [FRAC 7]) to mitigate fungal resistance.
+
+---
+
+#### Class 2: Late Blight
+- **Causal Pathogen**: *Phytophthora infestans* (Heterothallic Oomycete; historically infamous for the 1845 European Potato Famine).
+- **Disease Cycle & Transmission**: One of the most destructive agricultural plant diseases in human history. Does not survive in dry soil; overwinters in living host tissue (potato tubers, greenhouse crops, volunteer plants). Spreads via fragile microscopic sporangia carried on cool, moist wind currents for tens of miles. In free water, sporangia release motile biflagellate zoospores that swim to stomata, encyst, and penetrate host tissue within hours.
+- **Favorable Weather Conditions**: Cool, wet, persistently foggy, or rainy conditions. Ideal temperatures range from $15^\circ\text{C} - 22^\circ\text{C}$ ($59^\circ\text{F} - 72^\circ\text{F}$) coupled with relative humidity exceeding $90\%$. Infections halt if temperatures exceed $30^\circ\text{C}$ with dry air.
+- **Symptom Progression**:
+  - *Foliar*: Appears as rapid, pale-green to olive-green, water-soaked, irregular lesions that expand aggressively regardless of leaf veins. Lesions quickly turn greasy, dark brown to purplish-black, collapsing leaf architecture. In early mornings or humid fog, a delicate, frosty **white downy fungal growth** (sporangiophores and sporangia) emerges on the underside of infected leaves around the lesion margins.
+  - *Stems*: Dark brown to black greasy girdling lesions appear on petioles and main stems, causing whole branches to snap and wither.
+  - *Fruit*: Green and ripe fruit develop large, firm, irregular, greasy olive-brown lesions with a corrugated texture that quickly rot.
+  - *Destruction Velocity*: An entire commercial field can transition from a few localized spots to total blackened defoliation and collapse in **5 to 10 days**.
+- **Diagnostic Lookalikes & Differential Clues**: Unlike Early Blight and Target Spot, Late Blight lesions lack concentric rings, cross over major veins without boundary restriction, and produce characteristic frosty white downy sporulation on the leaf underside under high humidity.
+- **Integrated Pest Management (IPM)**:
+  - *Emergency Action*: Inspect fields daily during cool, rainy weather. Immediately rogue, double-bag in plastic, and bury or incinerate infected plants; **never compost late-blight tissue**.
+  - *Cultivar Resistance*: Plant modern tomato cultivars bred with *Ph-2* and *Ph-3* resistance genes (e.g., Mountain Magic, Defiant, Iron Lady).
+  - *Chemical Intervention*: Maintain preventative coverage with chlorothalonil, mancozeb, or fixed copper before rainy fronts. If disease is reported in your geographic region, apply targeted systemic oomyceticides (e.g., cyazofamid [FRAC 21], mandipropamid [FRAC 40], or cymoxanil [FRAC 27]).
+
+---
+
+#### Class 3: Leaf Mold
+- **Causal Pathogen**: *Passalora fulva* (syn. *Cladosporium fulvum*) (Ascomycete fungus).
+- **Disease Cycle & Transmission**: A specialized biotrophic pathogen primarily plaguing protected cultivation (polyhouses, glasshouses, and high tunnels), but also occurring in dense open fields in warm humid zones. Overwinters as conidia or sclerotia-like mycelium in greenhouse framework cracks, dry leaves, and seed. Spores are easily dislodged by airflow, workers' clothes, and pruning tools.
+- **Favorable Weather Conditions**: High relative humidity ($>85\%$, with optimal infection occurring at $90\%-95\%$) and warm temperatures between $21^\circ\text{C} - 24^\circ\text{C}$ ($70^\circ\text{F} - 75^\circ\text{F}$). Unlike most foliar fungi, *Passalora fulva* can establish severe infection without free liquid water droplets if ambient humidity remains consistently high.
+- **Symptom Progression**:
+  - *Upper Leaf Surface*: Initially manifests as diffuse, pale-green to bright-yellow chlorotic spots with indistinct, fading margins on older leaves.
+  - *Lower Leaf Surface*: Directly beneath the yellow patches, the fungus erupts into dense, velvety, olive-green to chocolate-brown fungal mold composed of thousands of conidiophores and conidia.
+  - *Defoliation*: Infected leaflets curl upward, turn completely yellow, wither into dry papery brown husks, and drop. Fruit infection is rare, but severe defoliation starves developing tomatoes, drastically reducing fruit size and sugar content.
+- **Diagnostic Lookalikes & Differential Clues**: Unique among tomato foliar diseases: the combination of pale yellow upper spots paired with dense olive-green velvet mold underneath is distinct. Powdery mildew produces powdery white growth on the *upper* leaf surface.
+- **Integrated Pest Management (IPM)**:
+  - *Climate Management*: Maximize greenhouse ventilation; run horizontal airflow (HAF) fans continuously; space rows widely; apply heat before sunrise to prevent dew point condensation on leaves.
+  - *Foliage Management*: Prune lower leaves up to the ripening fruit cluster to facilitate under-canopy air movement; strictly avoid overhead watering.
+  - *Cultivar Resistance*: Utilize greenhouse tomato hybrids bred with *Cf* resistance genes (*Cf-2*, *Cf-4*, *Cf-9*).
+  - *Chemical Intervention*: Copper fungicides, chlorothalonil, or mancozeb applied as preventative measures when greenhouse humidity cannot be maintained below 85%.
+
+---
+
+#### Class 4: Septoria Leaf Spot
+- **Causal Pathogen**: *Septoria lycopersici* (Ascomycete fungus).
+- **Disease Cycle & Transmission**: Overwinters in solanaceous weed hosts (such as *Solanum carolinense* / horsenettle and black nightshade), contaminated seed, and decaying tomato vines. Fungal pycnidia produce mucilaginous spores that are forcibly extruded and splashed upward onto lower leaves by rain or overhead watering.
+- **Favorable Weather Conditions**: Warm, wet, humid weather with temperatures between $20^\circ\text{C} - 25^\circ\text{C}$ ($68^\circ\text{F} - 77^\circ\text{F}$) combined with extended periods of rain, persistent fog, and high relative humidity.
+- **Symptom Progression**:
+  - *Foliar*: Symptoms erupt on the oldest lower foliage following fruit set. Lesions are numerous, small, and remarkably uniform: circular spots measuring $1.5 - 3\text{ mm}$ across.
+  - *Lesion Anatomy*: The outer margin of each lesion is dark brown to blackish, while the center dries into a sunken, distinctive **grayish-white or tan papery center**.
+  - *Microscopic Diagnostic Specks*: Within the gray center of mature lesions, several tiny, black, pimple-like specks (**pycnidia**, the asexual fruiting structures) become visible upon close inspection or with a 10× hand lens.
+  - *Defoliation Cycle*: As hundreds of spots cover individual leaflets, leaves turn yellow, chlorotic, shrivel, and drop prematurely. Defoliation ascends from the soil upward, stripping the canopy and leaving tomatoes exposed to sunscald. Fruits are rarely infected directly.
+- **Diagnostic Lookalikes & Differential Clues**: Closely resembles *Bacterial Spot*. Key distinction: Septoria spots are uniformly circular with distinct sunken gray/tan centers and visible black pycnidia specks. Bacterial spot lesions are irregular, water-soaked, lack pycnidia, and have a greasy texture.
+- **Integrated Pest Management (IPM)**:
+  - *Cultural Controls*: Eradicate horsenettle and nightshade weeds around field perimeters; mulch beds with 5–8 cm of straw or UV-reflective plastic mulch to block soil-borne spore splashback; stake and prune indeterminate vines.
+  - *Crop Rotation*: Maintain a rigorous 3-year non-solanaceous rotation schedule.
+  - *Chemical Intervention*: Apply protective fungicides (chlorothalonil, copper hydroxide, or mancozeb) starting at transplant establishment or early fruit set; repeat on a 7- to 10-day cycle during rainy periods.
+
+---
+
+#### Class 5: Two-Spotted Spider Mites
+- **Causal Organism**: *Tetranychus urticae* (Acarid pest; Order Trombidiformes; Family Tetranychidae).
+- **Biology & Life Cycle**: Microscopic ($0.4\text{ mm}$), eight-legged yellowish-green arachnids with two distinct dark lateral spots on the abdomen. Females lay hundreds of spherical eggs on leaf undersides. Under hot conditions ($30^\circ\text{C}$), the lifecycle from egg to reproducing adult compresses into an astonishing **5 to 7 days**, enabling exponential population explosions that overwhelm plants before growers notice.
+- **Feeding Mechanism**: Mites colonize the sheltered underside of leaves, inserting sharp piercing-sucking stylets into plant cells to drain sap and chlorophyll.
+- **Favorable Weather Conditions**: Hot, dry, dusty, drought-stressed environments ($>27^\circ\text{C} - 35^\circ\text{C}$ / $80^\circ\text{F} - 95^\circ\text{F}$) with low relative humidity ($<50\%$). Farm roads generating dust kick-up exacerbate infestations by suffocating natural predatory insects.
+- **Symptom Progression**:
+  - *Foliar*: Early damage appears on the upper leaf surface as fine, pale-yellow, speckled **stippling** (flecking) where mesophyll cells have been emptied of chlorophyll.
+  - *Webbing & Bronzing*: As the mite colony expands, fine, dense, silky webbing covers the leaf undersides, petiole junctions, and growing tips. Leaves turn yellow, bronze, dry, brittle, and drop.
+  - *Plant Decline*: Photosynthesis collapses, plants become severely stunted, and exposed fruit develops pale chlorotic spots and sunscald.
+- **Diagnostic Lookalikes & Differential Clues**: Early stippling can be mistaken for micronutrient deficiency (e.g., magnesium or nitrogen chlorosis) or nascent virus mottling. Confirm spider mites by inspecting leaf undersides with a 10× hand lens to observe crawling mites, spherical eggs, and webbing, or tap a suspect leaf over clean white paper.
+- **Integrated Pest Management (IPM)**:
+  - *Dust Suppression & Humidity*: Water gravel farm roads to suppress dust; provide overhead misting or sprinkle irrigation in hot weather (spider mites detest moisture and wash off easily).
+  - *Biological Control*: In greenhouses and high tunnels, release predatory mites (*Phytoseiulus persimilis* or *Neoseiulus californicus*) at the first sign of stippling before webs develop.
+  - *Chemical & Soft Controls*: Horticultural oils, insecticidal soaps, or azadirachtin (neem oil) applied thoroughly to leaf undersides. If synthetic acaricides are required (e.g., abamectin, bifenazate, spiromesifen), rotate mode of action to avoid rapid miticide resistance.
+  - *Caution*: Avoid broad-spectrum synthetic pyrethroids (e.g., bifenthrin, permethrin), which kill beneficial predatory insects and consistently trigger massive secondary spider mite outbreaks.
+
+---
+
+#### Class 6: Target Spot
+- **Causal Pathogen**: *Corynespora cassiicola* (Ascomycete fungus).
+- **Disease Cycle & Transmission**: A polyphagous necrotrophic fungal pathogen with a host range spanning over 530 plant species (including soybean, cucumber, papaya, and cotton). Overwinters in crop debris and wild weed hosts. Conidia are dispersed through wind currents and splashed by rain across the upper and middle foliage canopy.
+- **Favorable Weather Conditions**: Warm, humid tropical and subtropical environments; optimal temperatures between $25^\circ\text{C} - 32^\circ\text{C}$ ($77^\circ\text{F} - 90^\circ\text{F}$) combined with prolonged periods of leaf wetness and high relative humidity ($>80\%$).
+- **Symptom Progression**:
+  - *Foliar*: Commences as small, pinpoint, water-soaked brown spots on the upper leaf surface. Spots enlarge into circular to sub-circular necrotic lesions ($2 - 12\text{ mm}$).
+  - *Concentric Ring Pattern*: Mature lesions display pale brown to tan centers bordered by multiple dark brown **concentric rings**, visually mimicking a shooting target. Lesions coalesce rapidly, causing widespread foliar blighting, curled leaf edges, and severe defoliation throughout the middle and upper canopy.
+  - *Stems & Fruit*: Stems develop dark, elongated brown fissures. Green and ripe fruits develop small, circular, sunken lesions with dark brown margins, frequently cracking open and allowing secondary bacterial soft rot organisms to enter.
+- **Diagnostic Lookalikes & Differential Clues**: Closely mimics *Early Blight*. Differential markers: Target Spot lesions are typically smaller, more circular, have narrower yellow halos, and appear concurrently throughout the middle and upper canopy, whereas Early Blight initiates strictly on the oldest lower leaves and features wider, darker concentric bands.
+- **Integrated Pest Management (IPM)**:
+  - *Canopy Aeration*: Stake, trellis, and sucker tomato plants to maximize air circulation through the canopy; avoid excessive nitrogen fertilization, which generates dense foliage that traps moisture.
+  - *Residue Management*: Deep-till or remove solanaceous crop residues immediately following final harvest; rotate with non-host crops like corn or sorghum.
+  - *Chemical Intervention*: Protectant fungicides (chlorothalonil, mancozeb) alternated with strobilurin (pyraclostrobin [FRAC 11]) or SDHI chemistries (fluxapyroxad [FRAC 7]).
+
+---
+
+#### Class 7: Tomato Yellow Leaf Curl Virus (TYLCV)
+- **Causal Pathogen**: *Tomato yellow leaf curl virus* (TYLCV), family *Geminiviridae*, genus *Begomovirus* (Single-stranded circular DNA virus).
+- **Vector & Transmission**: Transmitted with high efficiency by the **Silverleaf Whitefly** (*Bemisia tabaci* complex, specifically biotypes B and Q). **Not seed-transmitted** in commercial tomato seed and **not transmissible mechanically** by pruning tools or human contact. Adult whiteflies acquire the virus in 15–30 minutes of feeding on infected hosts, undergo a 20-hour latent period, and subsequently transmit the virus to healthy plants for the remainder of their adult life (persistent circulative non-propagative transmission).
+- **Favorable Weather Conditions**: Warm, dry climates that foster explosive whitefly population growth; regions with continuous solanaceous cultivation without winter freeze periods or host-free breaks.
+- **Symptom Progression**:
+  - *Foliar*: Marked upward and inward cupping and curling of leaflet margins (giving leaves a characteristic spoon-like or cup-like shape). Leaflets exhibit pronounced **marginal and interveinal chlorosis** (bright yellow borders), reduced surface area, and thick leathery texture.
+  - *Architecture & Stunting*: Internodes become severely shortened, giving the plant a stunted, bushy, compact erect appearance.
+  - *Blossom & Yield Loss*: Heavy blossom drop occurs; flowers abort before fruit set. If infected during the early vegetative stage, tomato yield is **reduced by 80% to 100%**.
+- **Diagnostic Lookalikes & Differential Clues**: Upward leaf curling can easily be confused with *Physiological Leaf Roll* (a non-infectious stress disorder triggered by heavy pruning, high nitrogen, or drought). Physiological leaf roll causes thick leathery upward curling on lower leaves, but **never produces yellow chlorotic margins, leaf size reduction, or plant stunting**.
+- **Integrated Pest Management (IPM)**:
+  - *Genetic Resistance*: The most effective, sustainable control is planting hybrid tomato varieties bred with *Ty* resistance genes (*Ty-1*, *Ty-3*, *Ty-5*).
+  - *Vector Exclusion*: Install ultra-fine 50-mesh insect-exclusion screens on greenhouse vents; apply UV-reflective silver plastic mulches on field beds to disorient incoming whiteflies.
+  - *Rogueing*: Immediately pull up, seal in airtight plastic bags, and incinerate infected plants to eliminate viral reservoirs.
+  - *Vector Management*: Monitor with yellow sticky cards; rotate systemic insecticides (neonicotinoids, diamides, flupyradifurone) during nursery seedling stages, respecting resistance management.
+
+---
+
+#### Class 8: Tomato Mosaic Virus (ToMV)
+- **Causal Pathogen**: *Tomato mosaic virus* (ToMV), family *Virgaviridae*, genus *Tobamovirus* (Rigid rod-shaped positive-sense single-stranded RNA virus; closely related to Tobacco Mosaic Virus [TMV]).
+- **Vector & Transmission**: **Extremely infectious and mechanically transmitted**. It spreads through touch, pruning knives, staking twine, trellises, grafting tools, animal vectors, and workers brushing past wet plants. The virus is exceptionally stable outside living hosts: it can survive for decades in dry plant debris, on wooden greenhouse frames, in contaminated soil, and in commercial tobacco products (smokers and tobacco chewers can inadvertently transmit ToMV to tomato vines). Also transmissible on contaminated seed coats.
+- **Favorable Weather Conditions**: Thrives across a wide temperature spectrum ($20^\circ\text{C} - 32^\circ\text{C}$); symptoms become exacerbated under high nitrogen fertilization and low light intensities.
+- **Symptom Progression**:
+  - *Foliar*: Foliage develops a distinct **mosaic pattern** of alternating dark green, light green, and chlorotic yellowish mottled patches. Leaflets exhibit blister-like bubbling, distortion, puckering, and severe lamina narrowing into strap-like or "fern-leaf" (shoestring) morphology.
+  - *Architecture*: Plants become stunted with pale, spindly apical growth.
+  - *Fruit*: Green fruit shows internal brown necrotic rings (**brown wall** or internal vascular browning), while ripe fruit develops uneven ripening, blotchy yellow marbling, and unmarketable flavor.
+- **Diagnostic Lookalikes & Differential Clues**: Resembles *Cucumber Mosaic Virus* (CMV) and *Potato Virus Y* (PVY). ToMV is distinguished by its extreme persistence, lack of aphid transmission, and intense blistering distortion.
+- **Integrated Pest Management (IPM)**:
+  - *Hygiene & Sanitation*: Workers must wash hands thoroughly with soap or dip hands in a 20% non-fat dry milk solution (milk proteins bind and neutralize tobamovirus particles) before touching crops. Strictly prohibit smoking or tobacco products near tomato facilities.
+  - *Tool Sterilization*: Soak pruning shears, knives, and harvesting bins in 10% household bleach (freshly prepared) or virucidal sanitizers between rows.
+  - *Seed Decontamination*: Treat seed with a 10% trisodium phosphate (TSP) wash or hot-water soak ($50^\circ\text{C}$ for 25 minutes) to eradicate external viral particles.
+  - *Genetic Resistance*: Plant commercial varieties carrying the dominant *Tm-2* or *Tm-2^2* resistance genes.
+  - *Zero Chemical Cure*: No chemical viricides exist. Once infected, plants cannot be cured and must be carefully culled and destroyed.
+
+---
+
+#### Class 9: Healthy Tomato Leaf
+- **Classification Baseline**: Negative control indicating robust, uninfected foliage.
+- **Morphological Characteristics**: Leaves exhibit uniform, deep emerald-green pigmentation across the entire leaf lamina. Leaflet margins are crisp, intact, and naturally serrated without upward or downward rolling. Foliage is entirely free of necrotic spots, water-soaked margins, fungal molds, chlorotic halos, or viral mosaic mottling. Vascular veins appear translucent green, healthy, and unobstructed.
+- **Agronomic Maintenance Protocols**:
+  - *Soil & Nutrition*: Maintain balanced macronutrient (N-P-K) and micronutrient (Ca, Mg, Fe, B) availability. Prevent calcium deficiency to avoid physiological disorders like blossom end rot.
+  - *Irrigation Regimen*: Deliver consistent soil moisture via root-zone drip irrigation (1.5 to 2 inches of water per week), ensuring leaves remain dry.
+  - *Preventative Scouting*: Execute bi-weekly foliar scouting to identify nascent abiotic stresses or initial pathogen incursions before threshold spread occurs.
+
+---
+
+### Comparative Differential Diagnosis Matrix
+
+When evaluating suspicious tomato foliar symptoms, use this diagnostic matrix to cross-examine visual features and avoid common field misdiagnoses:
+
+| Disease / Condition | Lesion Geometry | Lesion Center & Margins | Halos Present? | Leaf Underside Feature | Primary Mode of Spread | Key Distinguishing Field Marker |
+|:---|:---|:---|:---:|:---|:---|:---|
+| **Bacterial Spot** | Small ($1 - 3\text{ mm}$), irregular | Dark brown, greasy, water-soaked | Yes (narrow yellow) | Flat, water-soaked | Rain splash, wet equipment | Greasy texture; completely lacks fungal pycnidia. |
+| **Early Blight** | Large ($5 - 15\text{ mm}$), circular | Dark brown with concentric bullseye rings | Yes (prominent yellow) | Dark concentric ridges | Wind, splashing conidia | Prominent concentric target rings starting on oldest lower foliage. |
+| **Late Blight** | Large, expansive, irregular | Olive-green turning purplish-black, greasy | No (pale green border) | Frosty white downy mold | Windborne sporangia | Rapid collapse of whole leaflets; white mold underneath during humid mornings. |
+| **Leaf Mold** | Indefinite, diffuse patches | Upper leaf pale greenish-yellow spots | No | Dense olive-green velvety mold | Greenhouse airflow, humidity | Upper yellow blotch aligns with olive-green velvet mold below. |
+| **Septoria Leaf Spot** | Small ($1.5 - 3\text{ mm}$), circular | Sunken grayish-white / tan centers with dark borders | Minor yellow halo | Sunken gray center | Splashing rain, dew | Distinct gray center containing visible tiny black pinpoint pycnidia. |
+| **Two-Spotted Spider Mites** | Fine speckled stippling ($<0.5\text{ mm}$) | Yellowish-white feeding puncture flecks | No | Fine silky webbing & active mites | Dry wind, walking mites | Microscopic mites crawling on leaf undersides among fine silk webbing. |
+| **Target Spot** | Medium ($2 - 10\text{ mm}$), circular | Brown with pale tan centers and target rings | Moderate yellow halo | Brown necrotic centers | Windborne conidia, rain | Target rings distributed evenly across upper and middle canopy. |
+| **Yellow Leaf Curl (TYLCV)** | Upward cupped / curled | Distorted leaflets, bright yellow margins | Diffuse marginal chlorosis | Clean; no fungal mold | Silverleaf Whitefly vector | Upward spoon-like leaf curling paired with yellow margins and severe stunting. |
+| **Mosaic Virus (ToMV)** | Blistered, distorted, fern-like | Alternating light green and dark green patches | Mottled mosaic | Distorted bubbling | Mechanical touch, pruning | Mottled light/dark green mosaic blisters and fern-like leaf distortion. |
+| **Healthy Leaf** | Natural flat serrated leaflet | Uniform vibrant green lamina | None | Clean green epidermis | N/A (Normal growth) | Complete absence of chlorosis, necrosis, curling, or sporulation. |
+
+---
 
 ---
 
