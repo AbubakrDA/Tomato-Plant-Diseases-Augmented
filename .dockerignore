@@ -1,0 +1,37 @@
+# Version Control
+.git/
+.gitignore
+
+# Environments and Caches
+.venv/
+env/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+.keras/
+~*
+
+# Large Dataset (avoid copying gigabytes of raw images into container image)
+Dataset/
+dataset/
+*.zip
+*.tar.gz
+*.rar
+
+# Notebooks and Checkpoints
+*.ipynb
+.ipynb_checkpoints/
+
+# IDE Files
+.vscode/
+.idea/
+
+# Temporary and Scratch Files
+scratch/
+*.log
+

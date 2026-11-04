@@ -1,0 +1,55 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd
+*.so
+*.dll
+~*
+
+# Virtual Environments
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+
+# Keras & Framework Cache
+.keras/
+*.whl
+
+# Large Datasets (keep model weights, ignore raw image datasets)
+Dataset/
+dataset/
+*.zip
+*.tar.gz
+*.rar
+
+# IDE & Editor Specific
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+
+# Environment Variables & Secrets
+.env
+.env.local
+.env.*.local
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs & Test Reports
+*.log
+.pytest_cache/
+.coverage
+htmlcov/
+
